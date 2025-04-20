@@ -8,7 +8,9 @@ In a seperate terminal
 
 ---------------------------
 Click on the localhost link that appears in this terminal. Mostly it will be something like http://localhost:5173/
+
 Navigate to http://localhost:5173/auth to signup/login
+
 To login, can use following credentials
 Name : ahana1@gmail.com
 Pwd : ahana1@gmail.com
