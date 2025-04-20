@@ -3,14 +3,14 @@ import React from 'react'
 import { useProductStore } from '../store/product'
 // import { useToast } from "@chakra-ui/react";
 import { toast } from "sonner"; // ✅ Import toast
-
+import { useNavigate } from 'react-router-dom';
 const CreatePage = () => {
   const [newProduct, setNewProduct] = React.useState({
     name: "",
     price: "",
     image: "",
   })
-
+  const navigate = useNavigate()
   // const toast = useToast()
   const {createProduct} = useProductStore()
   const handleAddProduct = async () => {
@@ -22,38 +22,21 @@ const CreatePage = () => {
     if (success) {
       toast.success("Product Added", {
         description: "Product added successfully!",
-        duration: 5000, // Show for 5 seconds
-        dismissible: true, // Make it closeable
+        duration: 3000,
+        dismissible: true,
       });
+    
+      // Delay navigation to let the toast be visible briefly
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } else {
       toast.error("Failed to Add Product", {
         description: message || "Something went wrong!",
         duration: 5000,
         dismissible: true,
       });
-    }
-  //   if(!success) {
-  //     toaster.create({
-  //       title: "Error",
-  //       description: message,
-  //       status: "error",
-  //       duration: 9000,
-  //       isClosable: true,
-  //     })
-  // }
-  // else{
-  //   toaster.create({
-  //     title: "Success",
-  //     description: message,
-  //     status: "success",
-  //     duration: 9000,
-  //     isClosable: true,
-  //   })
-  // }
-
-  // }
-
-};
+    }}
   return (
     <Container maxW={"container.sm"}>
       <Box w={"full"} bg={"gray.100"} p={4} mb={4} shadow={"md"}>

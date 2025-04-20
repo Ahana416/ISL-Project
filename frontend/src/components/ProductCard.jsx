@@ -1,3 +1,4 @@
+//***CORRECT CODE *******/
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -154,3 +155,98 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
+
+// **XSS VULNERABILITY**
+// import { Box, Heading, Text, Image, Button, VStack, HStack, Input } from "@chakra-ui/react";
+// import { useState, useEffect } from "react";
+
+// const ProductCard = ({ product }) => {
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [editedProduct, setEditedProduct] = useState({
+//     name: product.name,
+//     price: product.price,
+//     image: product.image,
+//   });
+
+//   const handleSave = () => {
+//     console.log("Product saved:", editedProduct);
+//     setIsEditing(false);
+//   };
+
+//   // Triggering the alert through eval for XSS demo
+//   useEffect(() => {
+//     if (!isEditing) {
+//       const scriptContent = `alert("XSS Vulnerability Demo: ${editedProduct.name}")`;
+//       eval(scriptContent);  // This will trigger the alert with the product name
+//     }
+//   }, [isEditing, editedProduct.name]);
+
+//   return (
+//     <Box
+//       maxW="sm"
+//       borderWidth="1px"
+//       borderRadius="lg"
+//       overflow="hidden"
+//       boxShadow="md"
+//       p={4}
+//       bg="white"
+//     >
+//       <Image
+//         borderRadius="md"
+//         src={editedProduct.image}
+//         alt={editedProduct.name}
+//         objectFit="cover"
+//         w="100%"
+//         h="200px"
+//       />
+//       <VStack align="start" mt={4} spacing={2}>
+//         {isEditing ? (
+//           <div>
+//             <Input
+//               mb={2}
+//               value={editedProduct.name}
+//               onChange={(e) =>
+//                 setEditedProduct({ ...editedProduct, name: e.target.value })
+//               }
+//               placeholder="Edit product name"
+//             />
+//             <Input
+//               mb={2}
+//               value={editedProduct.price}
+//               onChange={(e) =>
+//                 setEditedProduct({ ...editedProduct, price: e.target.value })
+//               }
+//               placeholder="Edit product price"
+//             />
+//             <Button onClick={handleSave} colorScheme="teal" size="sm">
+//               Save
+//             </Button>
+//           </div>
+//         ) : (
+//           <div>
+//             <Heading fontSize="xl">{editedProduct.name}</Heading>
+//             <Text fontWeight="bold" fontSize="lg">${editedProduct.price}</Text>
+
+//             {/* Injecting HTML content */}
+//             <div
+//               dangerouslySetInnerHTML={{
+//                 __html: `<p>Product: ${editedProduct.name}</p>`,
+//               }}
+//             />
+//           </div>
+//         )}
+//       </VStack>
+
+//       <HStack mt={4} spacing={4}>
+//         <Button colorScheme="blue" onClick={() => setIsEditing(true)}>
+//           Edit
+//         </Button>
+//         <Button colorScheme="red" onClick={() => alert("Product deleted!")}>
+//           Delete
+//         </Button>
+//       </HStack>
+//     </Box>
+//   );
+// };
+
+// export default ProductCard;

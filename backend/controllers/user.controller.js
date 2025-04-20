@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Signup
+// WORKING: Signup
 export const createUser = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password)
@@ -50,30 +50,52 @@ export const createUser = async (req, res) => {
 //     res.status(500).json({ success: false, message: 'Server error' });
 //   }
 // };
+//--------------------------------------------
+// WORKING : Login
+// export const loginUser = async (req, res) => {
+//   const { email, password } = req.body;
+//   if (!email || !password)
+//     return res.status(400).json({ success: false, message: 'Email and password are required' });
 
-// Login
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user)
+//       return res.status(401).json({ success: false, message: 'Invalid credentials' });
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch)
+//       return res.status(401).json({ success: false, message: 'Invalid credentials' });
+
+//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+//     res.status(200).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
+//   } catch (err) {
+//     res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// };
+
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ success: false, message: 'Email and password are required' });
 
   try {
-    const user = await User.findOne({ email });
-    if (!user)
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    // 🚨 Don't cast email to string (deliberately vulnerable)
+    const user = await User.findOne({ email }); // Vulnerable if email is an object
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
+    // Don't check password if you just want to demonstrate login happens
+    if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
 
+    // Skip password check just for demo purposes
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
     res.status(200).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
 
 // import User from "../models/user.model.js";
+
 // import bcrypt from "bcryptjs";
 // import jwt from "jsonwebtoken";
 
