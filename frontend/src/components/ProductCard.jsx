@@ -18,7 +18,9 @@ import { useState } from "react";
 
 const ProductCard = ({ product }) => {
   const textColor = useColorModeValue("gray.700", "gray.100");
-  const bg = useColorModeValue("white", "gray.800");
+  // const bg = useColorModeValue("white", "gray.800");
+  const bg = useColorModeValue("gray.50", "gray.700");
+
   const { deleteProduct, editProduct } = useProductStore();
 
 
@@ -120,12 +122,13 @@ const ProductCard = ({ product }) => {
           </VStack>
         ) : (
           <>
-            <Heading fontSize="2xl" mb={2}>
-              {editedProduct.name}
-            </Heading>
-            <Text fontWeight="bold" fontSize="xl" color={textColor} mb={4}>
-              ${editedProduct.price}
-            </Text>
+          <Heading fontSize="2xl" mb={2} color={textColor}>
+            {editedProduct.name}
+          </Heading>
+          <Text fontWeight="bold" fontSize="xl" color={textColor} mb={4}>
+            ${editedProduct.price}
+          </Text>
+
           </>
         )}
 
@@ -156,32 +159,27 @@ const ProductCard = ({ product }) => {
 
 export default ProductCard;
 
+
+
+
 // **XSS VULNERABILITY**
-// import { Box, Heading, Text, Image, Button, VStack, HStack, Input } from "@chakra-ui/react";
-// import { useState, useEffect } from "react";
+// import { Box, Heading, Text, Image, Button, VStack, HStack, Input } from "@chakra-ui/react"; 
+// import { useState } from "react";  
 
-// const ProductCard = ({ product }) => {
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [editedProduct, setEditedProduct] = useState({
-//     name: product.name,
-//     price: product.price,
-//     image: product.image,
-//   });
+// const ProductCard = ({ product }) => {   
+//   const [isEditing, setIsEditing] = useState(false);   
+//   const [editedProduct, setEditedProduct] = useState({     
+//     name: product.name,     
+//     price: product.price,     
+//     image: product.image,   
+//   });    
 
-//   const handleSave = () => {
-//     console.log("Product saved:", editedProduct);
-//     setIsEditing(false);
-//   };
+//   const handleSave = () => {     
+//     console.log("Product saved:", editedProduct);     
+//     setIsEditing(false);   
+//   };    
 
-//   // Triggering the alert through eval for XSS demo
-//   useEffect(() => {
-//     if (!isEditing) {
-//       const scriptContent = `alert("XSS Vulnerability Demo: ${editedProduct.name}")`;
-//       eval(scriptContent);  // This will trigger the alert with the product name
-//     }
-//   }, [isEditing, editedProduct.name]);
-
-//   return (
+//   return (     
 //     <Box
 //       maxW="sm"
 //       borderWidth="1px"
@@ -199,6 +197,7 @@ export default ProductCard;
 //         w="100%"
 //         h="200px"
 //       />
+      
 //       <VStack align="start" mt={4} spacing={2}>
 //         {isEditing ? (
 //           <div>
@@ -227,7 +226,7 @@ export default ProductCard;
 //             <Heading fontSize="xl">{editedProduct.name}</Heading>
 //             <Text fontWeight="bold" fontSize="lg">${editedProduct.price}</Text>
 
-//             {/* Injecting HTML content */}
+//             {/* 🧨 XSS Happens here */}
 //             <div
 //               dangerouslySetInnerHTML={{
 //                 __html: `<p>Product: ${editedProduct.name}</p>`,
@@ -245,8 +244,8 @@ export default ProductCard;
 //           Delete
 //         </Button>
 //       </HStack>
-//     </Box>
-//   );
-// };
+//     </Box>   
+//   ); 
+// };  
 
 // export default ProductCard;
